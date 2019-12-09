@@ -2,6 +2,12 @@
    padding: 0 !important;
    margin: 0 !important;
 }
+body {
+  font-size: 12px !important;
+}
+h3 {
+  font-size: 18px !important;
+}
 
 .footer {
   position: absolute;

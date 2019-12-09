@@ -1,4 +1,4 @@
-pragma solidity ^0.4.18;
+pragma solidity >= 0.4.18 < 0.6.0;
 
 import "./ERC20.sol";
 
@@ -10,11 +10,11 @@ contract TimeLockedWallet {
     uint256 public createdAt;
 
     modifier onlyOwner {
-        require(msg.sender == owner);
+        require(msg.sender == owner, "Caller is not owner");
         _;
     }
 
-    function TimeLockedWallet(
+    constructor(
         address _creator,
         address _owner,
         uint256 _unlockDate
@@ -22,34 +22,34 @@ contract TimeLockedWallet {
         creator = _creator;
         owner = _owner;
         unlockDate = _unlockDate;
-        createdAt = now;
+        createdAt = block.timestamp;
     }
 
     // keep all the ether sent to this address
-    function() payable public { 
-        Received(msg.sender, msg.value);
+    function () external payable { 
+        emit Received(msg.sender, msg.value);
     }
 
     // callable by owner only, after specified time
-    function withdraw() onlyOwner public {
-       require(now >= unlockDate);
+    function withdraw() public onlyOwner{
+       require(now >= unlockDate, "wallet is still in lock period");
        //now send all the balance
-       msg.sender.transfer(this.balance);
-       Withdrew(msg.sender, this.balance);
+       msg.sender.transfer(address(this).balance);
+       emit Withdrew(msg.sender, address(this).balance);
     }
 
     // callable by owner only, after specified time, only for Tokens implementing ERC20
-    function withdrawTokens(address _tokenContract) onlyOwner public {
-       require(now >= unlockDate);
+    function withdrawTokens(address _tokenContract) public onlyOwner {
+       require(now >= unlockDate, "wallet is still in lock period");
        ERC20 token = ERC20(_tokenContract);
        //now send all the token balance
-       uint256 tokenBalance = token.balanceOf(this);
+       uint256 tokenBalance = token.balanceOf(address(this));
        token.transfer(owner, tokenBalance);
-       WithdrewTokens(_tokenContract, msg.sender, tokenBalance);
+       emit WithdrewTokens(_tokenContract, msg.sender, tokenBalance);
     }
 
     function info() public view returns(address, address, uint256, uint256, uint256) {
-        return (creator, owner, unlockDate, createdAt, this.balance);
+        return (creator, owner, unlockDate, createdAt, address(this).balance);
     }
 
     event Received(address from, uint256 amount);
