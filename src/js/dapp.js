@@ -21,8 +21,8 @@ DApp = {
     decimal: 18,
     baseToken: new BigNumber("10").exponentiatedBy(18),
     //Rinkeby:
-    factoryAddress: "0xa4A0eB89799a99238A9BE2B8c2E976A7dA536087",
-    tokenAddress: "0x0A28F33849f7900c32A6061569848A4D2AbA9c89",
+    factoryAddress: "0x055c98458D849265e7213BB226597248351b7BB2",
+    tokenAddress: "0xe880141c45d66a131c99dacc88dbc32f85b454b2",
     tokenName: "MITx",
     network: NETWORK[defaultNetwork], 
 
