@@ -3,14 +3,16 @@
 <head>
     <title>Dapp</title>
 
-    <link rel="stylesheet" href="css/bootstrap-4.0.0-beta-2.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+    <!-- <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/> -->
+    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    
     <link rel="stylesheet" href="css/dapp.css">
-
 </head>
 <body>
+    
     <div class="header clearfix">
         <!-- Fixed navbar -->
         <nav class="navbar navbar-expand-md navbar-dark mb-4 bg-dark">
@@ -19,12 +21,6 @@
     </div>
 
     <div id="dapp" class="container">
-        <!--<div class="row" style="height: 75px;">-->
-            <!--<img src="img/eth-logo.png" style="height: 75px; width: 75px"/>-->
-            <!--<h1>ETH Locker</h1>-->
-
-        <!--</div>-->
-
         <div class="container">
             <div class="row">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -72,22 +68,27 @@
                     </div>
                 </div>
                 <form id="create-wallet-form">
-                    <div class="row">
-                        <div class="col form-group">
-                            <label for="ethereumAddress">Receiver Address</label>
-                            <input id="ethereumAddress" type="text" class="form-control" placeholder="Reciever eth address">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col form-group">
+                                <label for="ethereumAddress">Receiver Address</label>
+                                <input id="ethereumAddress" type="text" class="form-control" placeholder="Reciever eth address">
+                            </div>
                         </div>
-                        <div class="col form-group">
-                            <label for="unlockDate">Unlock Time (UTC)</label>
-                            <input id="unlockDate" type="datetime-local" class="form-control">
+                        <div class="row">
+                            <div class="col form-group">
+                                <label>Amount</label>
+                                <input type="number" class="form-control" name="amount" placeholder="Amount to lock">
+                            </div>
+                            <div class="col form-group">
+                                <label>Release Date</label>
+                                <input class="release-date" name="date" placeholder="MM/DD/YYYY" type="text"/>
+                            </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col form-group">
-                            <label for="etherAmount">Optional Ether Amount</label>
-                            <input id="etherAmount" type="number" min="0" step="0.001" class="form-control" placeholder="ETH amount">
-                        </div>
-                    </div>
+                    <button type="button" class="btn btn-primary" id="addNewLock">Add new lock info</button>
+                    <br/><br/>
+                    
                     <button type="submit" class="btn btn-primary btn-block text-white">Create Wallet</button>
                 </form>
             </div>
@@ -146,19 +147,18 @@
                         </div>
                         <div class="col form-group">
                             <label for="unlockIn">Unlock Time</label>
-                            <input id="unlockIn" type="text" disabled class="form-control" placeholder="Unlock time">
+                            <div id="claimSchedule" class="container" style="border: 1px solid #ced4da;"></div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col form-group">
-                            <label for="claimableAmount">Claimable Amount</label>
+                            <label for="claimableAmount">Total Claimable Amount</label>
                             <input id="claimableAmount" type="number" disabled class="form-control" placeholder="Currency amount">
                         </div>
                         <div class="col form-group">
                             <label for="claimableCurrency">Currency</label>
                             <select class="form-control" id="claimableCurrency">
-                                <option value="ether">Ether</option>
-                                <option value="tokenerc20">ERC20 Token</option>
+                                <option value="tokenerc20">Token</option>
                             </select>
                         </div>
                     </div>
@@ -183,11 +183,16 @@
 
     <script src="js/lib/jquery-3.2.1.min.js"></script>
     <script src="js/lib/popper-1.12.3.min.js"></script>
-    <script src="js/lib/bootstrap-4.0.0-beta-2.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
     <script src="js/lib/moment-2.19.2.min.js"></script>
     <script src="js/lib/moment-timezone-0.5.14.min.js "></script>
+
+    
+    <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+    
+
     <script src="js/lib/bignumber.min.js "></script>
     <script src="https://cdn.jsdelivr.net/npm/truffle-contract@4.0.22/dist/truffle-contract.min.js"></script>
     <script src="js/metamask-enable.js"></script>

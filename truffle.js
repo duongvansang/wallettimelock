@@ -7,7 +7,7 @@
 
 
 const PrivateKeyProvider = require("truffle-privatekey-provider");
-const privateKey = "cd2cd801889c5c44701f938dc95a54a92d8f91e1f223c1bff5508c0ef65be198";
+const privateKey = "EAAFE8A2221A1D023FE55FD9DF3F6784AE91746863E279B9F7A286722CBC6D22";
 const gasPrice = 10000000000; // (10 gwei)
 
 const network = {
@@ -28,11 +28,11 @@ module.exports = {
 
   networks: {
     development: {
-      provider: () => new PrivateKeyProvider(privateKey, network.DEV),
+      // provider: () => new PrivateKeyProvider(privateKey, network.DEV),
       gas: 2500000,
       gasPrice: gasPrice,
-      // host: "127.0.0.1",     // Localhost (ganache) (default: none)
-      // port: 8545,            // Standard Ethereum port (default: none)
+      host: "127.0.0.1",     // Localhost (ganache) (default: none)
+      port: 7545,            // Standard Ethereum port (default: none)
       network_id: '*',          // Any network (default: none)
       skipDryRun: true      
     },

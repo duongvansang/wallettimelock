@@ -1,6 +1,6 @@
 pragma solidity >= 0.4.18 < 0.6.0;
 
-import "./TimeLockedWallet.sol";
+import "./TokenTimeLockedWallet.sol";
 
 contract TimeLockedWalletFactory {
 
@@ -10,9 +10,9 @@ contract TimeLockedWalletFactory {
         return wallets[_user];
     }
 
-    function newTimeLockedWallet(address _owner, uint256 _unlockDate) public payable returns(address) {
+    function newTimeLockedWallet(address _owner, uint256[] memory _lockTimeFrames, uint256[] memory _lockAmounts) public returns(address) {
         // Create new wallet.
-        address payable wallet = address(new TimeLockedWallet(msg.sender, _owner, _unlockDate));
+        address wallet = address(new TokenTimeLockedWallet(msg.sender, _owner, _lockTimeFrames, _lockAmounts));
 
         // Add wallet to sender's wallets.
         wallets[msg.sender].push(wallet);
@@ -22,11 +22,8 @@ contract TimeLockedWalletFactory {
             wallets[_owner].push(wallet);
         }
 
-        // Send ether from this transaction to the created contract.
-        wallet.transfer(msg.value);
-
         // Emit event.
-        emit Created(wallet, msg.sender, _owner, now, _unlockDate, msg.value);
+        emit Created(wallet, msg.sender, _owner, now, _lockTimeFrames, _lockAmounts);
     }
 
     // Prevents accidental sending of ether to the factory
@@ -34,5 +31,5 @@ contract TimeLockedWalletFactory {
         revert("Could not send eth to contract");
     }
 
-    event Created(address wallet, address from, address to, uint256 createdAt, uint256 unlockDate, uint256 amount);
+    event Created(address wallet, address from, address to, uint256 createdAt, uint256[] lockTimeFrames, uint256[] lockAmounts);
 }
