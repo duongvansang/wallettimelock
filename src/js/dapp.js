@@ -1,7 +1,7 @@
 const NETWORK = {
-    ROPSTEN:'https://ropsten.etherscan.io/address',
-    RINKEBY:'https://rinkeby.etherscan.io/address',
-    MAINNET:'https://etherscan.io/address'
+    ROPSTEN:'https://ropsten.infura.io/v3/f2473914890349138c8b03e3ef79d165',
+    RINKEBY:'https://rinkeby.infura.io/v3/f2473914890349138c8b03e3ef79d165',
+    MAINNET:'https://ropsten.infura.io/v3/f2473914890349138c8b03e3ef79d165'
 }
 
 // default network is rinkeby
@@ -71,7 +71,7 @@ DApp.prototype.initContract = function () {
                 this.walletContract.setProvider(this.web3Provider);
                 console.log("[x] TimeLockedWallet contract initialized.");
 
-                web3.eth.getAccounts((error, accounts) => {
+                window.web3.eth.getAccounts((error, accounts) => {
                     if (error) {
                         console.error(error);
                     } else {

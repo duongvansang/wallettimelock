@@ -1,10 +1,15 @@
 window.addEventListener('load', async () => {
     // Modern dapp browsers...
     if (window.ethereum) {
-        window.web3 = new Web3(ethereum);
+        window.web3 = new Web3(window.ethereum);
         try {
             // Request account access if needed
-            await ethereum.enable();
+            console.log("Request account");
+            const accounts = await window.ethereum.request({
+                method: 'eth_requestAccounts',
+            });
+
+            console.log(accounts);
 
             // refresh page when account change
             ethereum.on('accountsChanged', function (accounts) {
