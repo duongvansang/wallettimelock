@@ -1,7 +1,7 @@
 const NETWORK = {
-    ROPSTEN:'https://ropsten.infura.io/v3/f2473914890349138c8b03e3ef79d165',
-    RINKEBY:'https://rinkeby.infura.io/v3/f2473914890349138c8b03e3ef79d165',
-    MAINNET:'https://ropsten.infura.io/v3/f2473914890349138c8b03e3ef79d165'
+    ROPSTEN:'https://ropsten.etherscan.io/',
+    RINKEBY:'https://rinkeby.etherscan.io/',
+    MAINNET:'https://etherscan.io/'
 }
 
 // default network is rinkeby
@@ -354,7 +354,7 @@ DApp.prototype.initCreateWalletForm = function () {
         uiLibrary: 'bootstrap4'
     });
     $("#create-wallet-form").submit((event) => {
-        console.log("Create on create wallet");
+        console.log("Create new wallet");
         event.preventDefault();
         var form = $(event.target);
         var ethAddress = form.find("#ethereumAddress").val();
@@ -632,7 +632,7 @@ DApp.prototype.dateFormatter = function(timestamp, row, index){
 
 DApp.prototype.valueFormatter = function(cell, row){
     var weiValue = this.getKnownWalletBallance(row['wallet'], 'wei');
-    var ethValue = web3.fromWei(weiValue, 'ether');
+    var ethValue = web3.utils.fromWei(`${weiValue}`, 'ether');
     var tokenValue = this.getKnownWalletBallance(row['wallet'], this.tokenName)
     let tokenAmount = new BigNumber(`${tokenValue}`).div(this.baseToken).toNumber();
 
